@@ -1,0 +1,169 @@
+<!-- src/app/pages/register/register.component.html -->
+<div class="register-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-7">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+          <div class="card-header bg-success text-white text-center py-4">
+            <h3 class="font-weight-light mb-0">
+              <i class="bi bi-person-plus"></i> Créer un compte
+            </h3>
+          </div>
+          <div class="card-body p-5">
+            <!-- رسالة الخطأ -->
+            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ errorMessage }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- رسالة النجاح -->
+            <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ successMessage }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- نموذج التسجيل -->
+            <form (ngSubmit)="onSubmit()">
+              <div class="row">
+                <!-- Nom complet -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="name" 
+                      placeholder="Nom complet"
+                      [(ngModel)]="registerData.name"
+                      name="name"
+                      required
+                    >
+                    <label for="name">
+                      <i class="bi bi-person"></i> Nom complet
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="email" 
+                      class="form-control" 
+                      id="email" 
+                      placeholder="name@example.com"
+                      [(ngModel)]="registerData.email"
+                      name="email"
+                      required
+                    >
+                    <label for="email">
+                      <i class="bi bi-envelope"></i> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Téléphone -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="tel" 
+                      class="form-control" 
+                      id="telephone" 
+                      placeholder="Téléphone"
+                      [(ngModel)]="registerData.telephone"
+                      name="telephone"
+                    >
+                    <label for="telephone">
+                      <i class="bi bi-telephone"></i> Téléphone
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Adresse -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="adresse" 
+                      placeholder="Adresse"
+                      [(ngModel)]="registerData.adresse"
+                      name="adresse"
+                    >
+                    <label for="adresse">
+                      <i class="bi bi-geo-alt"></i> Adresse
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Mot de passe -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="password" 
+                      class="form-control" 
+                      id="password" 
+                      placeholder="Mot de passe"
+                      [(ngModel)]="registerData.password"
+                      name="password"
+                      required
+                      minlength="6"
+                    >
+                    <label for="password">
+                      <i class="bi bi-lock"></i> Mot de passe (min. 6 caractères)
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Confirmation mot de passe -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input 
+                      type="password" 
+                      class="form-control" 
+                      id="password_confirmation" 
+                      placeholder="Confirmer le mot de passe"
+                      [(ngModel)]="registerData.password_confirmation"
+                      name="password_confirmation"
+                      required
+                      [class.is-invalid]="!passwordsMatch"
+                    >
+                    <label for="password_confirmation">
+                      <i class="bi bi-lock-fill"></i> Confirmer le mot de passe
+                    </label>
+                    <div *ngIf="!passwordsMatch" class="invalid-feedback">
+                      Les mots de passe ne correspondent pas.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-grid mb-3 mt-4">
+                <button 
+                  type="submit" 
+                  class="btn btn-success btn-lg"
+                  [disabled]="isLoading"
+                >
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                  S'inscrire
+                </button>
+              </div>
+
+              <!-- Link to Login -->
+              <div class="text-center">
+                <p class="mb-0">
+                  Déjà un compte ? 
+                  <a routerLink="/login" class="text-decoration-none">Se connecter</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

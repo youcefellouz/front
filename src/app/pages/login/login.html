@@ -1,0 +1,78 @@
+<!-- src/app/pages/login/login.component.html -->
+<div class="login-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+          <div class="card-header bg-primary text-white text-center py-4">
+            <h3 class="font-weight-light mb-0">
+              <i class="bi bi-box-arrow-in-right"></i> Connexion
+            </h3>
+          </div>
+          <div class="card-body p-5">
+            <!-- رسالة الخطأ -->
+            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ errorMessage }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- نموذج تسجيل الدخول -->
+            <form (ngSubmit)="onSubmit()">
+              <!-- Email -->
+              <div class="form-floating mb-3">
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="email" 
+                  placeholder="name@example.com"
+                  [(ngModel)]="loginData.email"
+                  name="email"
+                  required
+                >
+                <label for="email">
+                  <i class="bi bi-envelope"></i> Adresse email
+                </label>
+              </div>
+
+              <!-- Password -->
+              <div class="form-floating mb-4">
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="password" 
+                  placeholder="Mot de passe"
+                  [(ngModel)]="loginData.password"
+                  name="password"
+                  required
+                >
+                <label for="password">
+                  <i class="bi bi-lock"></i> Mot de passe
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-grid mb-3">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary btn-lg"
+                  [disabled]="isLoading"
+                >
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                  Se connecter
+                </button>
+              </div>
+
+              <!-- Link to Register -->
+              <div class="text-center">
+                <p class="mb-0">
+                  Pas encore de compte ? 
+                  <a routerLink="/register" class="text-decoration-none">Créer un compte</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

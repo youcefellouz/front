@@ -1,0 +1,51 @@
+/* src/app/pages/register/register.component.css */
+.register-container {
+  min-height: 80vh;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  padding-bottom: 50px;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.form-control:focus {
+  border-color: #38ef7d;
+  box-shadow: 0 0 0 0.2rem rgba(56, 239, 125, 0.25);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-success:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+a {
+  color: #11998e;
+  font-weight: 600;
+}
+
+a:hover {
+  color: #38ef7d;
+}
+
+.is-invalid {
+  border-color: #dc3545;
+}
