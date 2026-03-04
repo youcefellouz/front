@@ -1,0 +1,98 @@
+<div class="breadcrumb-section">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a routerLink="/">Accueil</a>
+      <i class="bi bi-chevron-right"></i>
+      <span class="active">Panier</span>
+    </nav>
+  </div>
+</div>
+
+<section class="cart-section section-padding">
+  <div class="container">
+    <h1 class="page-title">
+      <i class="bi bi-cart3"></i>
+      Mon Panier
+    </h1>
+
+    <!-- Empty Cart -->
+    <div *ngIf="cart.items.length === 0" class="empty-cart">
+      <i class="bi bi-cart-x"></i>
+      <h2>Votre panier est vide</h2>
+      <p>Découvrez nos produits et ajoutez-les à votre panier</p>
+      <button class="btn btn-primary btn-lg" routerLink="/products">
+        <i class="bi bi-bag"></i>
+        Continuer les achats
+      </button>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-content" *ngIf="cart.items.length > 0">
+      <div class="cart-layout">
+        <!-- Cart Items -->
+        <div class="cart-items">
+          <div class="cart-item" *ngFor="let item of cart.items; let i = index">
+            <div class="item-image">
+              <i class="bi bi-laptop-fill"></i>
+            </div>
+            <div class="item-details">
+              <h3 class="item-name">{{item.article.designation}}</h3>
+              <span class="item-brand">{{item.article.brand?.nom}}</span>
+              <div class="item-price">{{formatPrice(item.article.prix)}}</div>
+            </div>
+            <div class="item-quantity">
+              <button class="qty-btn" (click)="updateQuantity(item.article.id, item.quantite - 1)">
+                <i class="bi bi-dash"></i>
+              </button>
+              <span class="qty-value">{{item.quantite}}</span>
+              <button class="qty-btn" (click)="updateQuantity(item.article.id, item.quantite + 1)">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+            <div class="item-subtotal">
+              {{formatPrice(item.article.prix * item.quantite)}}
+            </div>
+            <button class="item-remove" (click)="removeItem(item.article.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+          <h3 class="summary-title">Résumé de la commande</h3>
+          
+          <div class="summary-row">
+            <span>Sous-total</span>
+            <span>{{formatPrice(cart.total)}}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Livraison</span>
+            <span class="text-success">Gratuite</span>
+          </div>
+          
+          <div class="summary-row discount" *ngIf="discount > 0">
+            <span>Remise</span>
+            <span class="text-danger">-{{formatPrice(discount)}}</span>
+          </div>
+          
+          <div class="summary-total">
+            <span>Total</span>
+            <span>{{formatPrice(cart.total - discount)}}</span>
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg" routerLink="/checkout">
+            <i class="bi bi-credit-card"></i>
+            Passer la commande
+          </button>
+
+          <button class="btn btn-outline btn-block" routerLink="/products">
+            <i class="bi bi-arrow-left"></i>
+            Continuer les achats
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

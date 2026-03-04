@@ -1,23 +1,187 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- Top Bar -->
+<div class="top-bar">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">
-      <i class="bi bi-laptop"></i> FinEtude - Matériels Informatiques
-    </a>
-    <div class="d-flex">
-      <a routerLink="/login" class="btn btn-outline-light me-2">
-        <i class="bi bi-box-arrow-in-right"></i> Connexion
-      </a>
-      <a routerLink="/register" class="btn btn-success">
-        <i class="bi bi-person-plus"></i> Inscription
-      </a>
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a href="tel:+213555123456" class="top-bar-link">
+          <i class="bi bi-telephone-fill"></i>
+          <span>+213 555 123 456</span>
+        </a>
+        <span class="top-bar-divider">•</span>
+        <a href="mailto:support@smartit.dz" class="top-bar-link">
+          <i class="bi bi-envelope-fill"></i>
+          <span>support@smartit.dz</span>
+        </a>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-bar-item">
+          <i class="bi bi-truck"></i>
+          Livraison gratuite dès 5 000 DA
+        </span>
+        <span class="top-bar-divider">•</span>
+        <span class="top-bar-item">
+          <i class="bi bi-arrow-repeat"></i>
+          Retour gratuit 30 jours
+        </span>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Main Header -->
+<header class="main-header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo -->
+      <a routerLink="/" class="logo">
+        <div class="logo-text">
+          <span class="logo-main">SMART</span>
+          <span class="logo-dot">.</span>
+        </div>
+        <span class="logo-sub">IT</span>
+      </a>
+
+      <!-- Search -->
+      <div class="search-container">
+        <div class="search-box">
+          <select class="search-category">
+            <option value="">Toutes catégories</option>
+            <option value="laptops">Ordinateurs</option>
+            <option value="smartphones">Smartphones</option>
+            <option value="audio">Audio</option>
+            <option value="gaming">Gaming</option>
+          </select>
+          <input type="text" class="search-input" placeholder="Rechercher un produit...">
+          <button class="search-button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <a routerLink="/login" class="action-item">
+          <div class="action-icon">
+            <i class="bi bi-person"></i>
+          </div>
+          <div class="action-text">
+            <span class="action-label">Mon compte</span>
+          </div>
+        </a>
+        <a routerLink="/cart" class="action-item cart-action">
+          <div class="action-icon">
+            <i class="bi bi-cart3"></i>
+            <span class="cart-count">{{cartCount}}</span>
+          </div>
+          <div class="action-text">
+            <span class="action-label">Panier</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav class="main-nav">
+  <div class="container">
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a routerLink="/" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">🔥</span>
+          <span class="nav-text">Super Deal</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/products" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">💻</span>
+          <span class="nav-text">Produits</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/products" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">📂</span>
+          <span class="nav-text">Catégories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/products" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">🏷️</span>
+          <span class="nav-text">Offres</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<!-- Main Content -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
 
-<footer class="bg-dark text-white text-center py-3 mt-5">
-  <div class="container">
-    <p class="mb-0">&copy; 2026 FinEtude. Tous droits réservés.</p>
+<!-- Footer -->
+<footer class="main-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 class="footer-logo">
+            SMART<span class="text-primary">.</span>
+            <span class="footer-logo-sub">IT</span>
+          </h3>
+          <p class="footer-description">
+            Votre boutique électronique #1 en Algérie. Large choix, prix compétitifs et livraison rapide.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="social-link"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a routerLink="/">Accueil</a></li>
+            <li><a routerLink="/products">Produits</a></li>
+            <li><a routerLink="/products">Offres</a></li>
+            <li><a routerLink="/about">À propos</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4 class="footer-title">Mon Compte</h4>
+          <ul class="footer-links">
+            <li><a routerLink="/login">Connexion</a></li>
+            <li><a routerLink="/register">Inscription</a></li>
+            <li><a routerLink="/orders">Mes commandes</a></li>
+            <li><a routerLink="/profile">Mon profil</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4 class="footer-title">Contact</h4>
+          <ul class="footer-contact">
+            <li><i class="bi bi-telephone-fill"></i> +213 555 123 456</li>
+            <li><i class="bi bi-envelope-fill"></i> support@smartit.dz</li>
+            <li><i class="bi bi-geo-alt-fill"></i> Alger, Algérie</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-content">
+        <p>&copy; 2026 SmartIT DZ. Tous droits réservés.</p>
+        <div class="footer-legal">
+          <a href="#">Confidentialité</a>
+          <a href="#">CGV</a>
+          <a href="#">Mentions légales</a>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>

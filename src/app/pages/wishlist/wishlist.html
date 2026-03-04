@@ -1,0 +1,40 @@
+<div class="wishlist-section section-padding">
+  <div class="container">
+    <h1 class="page-title">
+      <i class="bi bi-heart-fill"></i>
+      Mes Favoris
+    </h1>
+
+    <div *ngIf="wishlist.length === 0" class="empty-wishlist">
+      <i class="bi bi-heart"></i>
+      <h2>Votre liste de favoris est vide</h2>
+      <p>Ajoutez vos produits préférés ici!</p>
+      <button class="btn btn-primary btn-lg" routerLink="/products">
+        <i class="bi bi-bag"></i>
+        Découvrir les produits
+      </button>
+    </div>
+
+    <div class="products-grid" *ngIf="wishlist.length > 0">
+      <div class="product-card" *ngFor="let product of wishlist">
+        <button class="remove-wishlist" (click)="removeFromWishlist(product.id)">
+          <i class="bi bi-x"></i>
+        </button>
+        <div class="product-image">
+          <i class="bi bi-laptop-fill product-icon"></i>
+        </div>
+        <div class="product-info">
+          <span class="product-brand">{{product.brand?.nom}}</span>
+          <h3 class="product-name">{{product.designation}}</h3>
+          <div class="product-price">
+            <span class="price-current">{{formatPrice(product.prix)}}</span>
+          </div>
+          <button class="btn-add-cart" (click)="addToCart(product)">
+            <i class="bi bi-cart-plus"></i>
+            Ajouter au panier
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,51 +1,69 @@
-/* src/app/pages/register/register.component.css */
-.register-container {
-  min-height: 80vh;
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-  padding-bottom: 50px;
+/* Same as login.component.css with additions */
+
+.auth-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.card {
-  border-radius: 15px;
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  color: var(--text-gray);
 }
 
-.card-header {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+.benefit-item i {
+  color: var(--primary);
+  font-size: 1.25rem;
 }
 
-.form-control:focus {
-  border-color: #38ef7d;
-  box-shadow: 0 0 0 0.2rem rgba(56, 239, 125, 0.25);
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.btn-success {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-  border: none;
-  padding: 12px;
-  font-weight: 600;
+.form-checkbox {
+  margin: 0.5rem 0;
 }
 
-.btn-success:hover {
-  background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--text-gray);
 }
 
-.btn-success:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.checkbox-label input {
+  margin-top: 0.25rem;
 }
 
-a {
-  color: #11998e;
-  font-weight: 600;
-}
-
-a:hover {
-  color: #38ef7d;
+.checkbox-label a {
+  text-decoration: none;
 }
 
 .is-invalid {
-  border-color: #dc3545;
+  border-color: var(--danger) !important;
+}
+
+.invalid-feedback {
+  color: var(--danger);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  color: var(--success);
+  border: 1px solid #bbf7d0;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,0 +1,195 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge animate-fade-in">
+        <span class="badge-icon">🔥</span>
+        <span>OFFRE DU JOUR</span>
+      </div>
+      <h1 class="hero-title animate-fade-in">
+        Trouvez les <span class="text-primary">appareils faits</span> pour vous
+      </h1>
+      <p class="hero-subtitle animate-fade-in">
+        Large sélection d'électronique et de gadgets dernier cri
+      </p>
+      <p class="hero-price animate-fade-in">
+        À partir de <span class="text-primary">15 000 DA</span>
+      </p>
+      <div class="hero-cta animate-fade-in">
+        <button class="btn btn-primary btn-lg">
+          Acheter maintenant <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-placeholder">
+        <i class="bi bi-laptop" style="font-size: 8rem; color: var(--primary);"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="bi bi-truck"></i>
+        </div>
+        <h3 class="feature-title">Livraison gratuite</h3>
+        <p class="feature-desc">Commandes +5 000 DA</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="bi bi-arrow-repeat"></i>
+        </div>
+        <h3 class="feature-title">Retour 30 jours</h3>
+        <p class="feature-desc">Retour simplifié</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="bi bi-shield-lock"></i>
+        </div>
+        <h3 class="feature-title">Paiement sécurisé</h3>
+        <p class="feature-desc">Protection complète</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="bi bi-headset"></i>
+        </div>
+        <h3 class="feature-title">Support 24/7</h3>
+        <p class="feature-desc">Assistance disponible</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">
+        Parcourir par <span>catégorie</span>
+      </h2>
+      <a routerLink="/products" class="view-all">
+        Voir tout <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card" *ngFor="let category of categories">
+        <div class="category-icon">
+          <i class="bi {{category.icon}}"></i>
+        </div>
+        <h3 class="category-name">{{category.name}}</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Daily Deals Section -->
+<section class="deals-section section-padding">
+  <div class="container">
+    <div class="deals-header">
+      <h2 class="section-title text-white">
+        🔥 Meilleures <span class="text-primary">offres du jour</span>
+      </h2>
+      <div class="countdown-container">
+        <span class="countdown-label">Expire dans:</span>
+        <div class="countdown">
+          <div class="countdown-item">
+            <span class="countdown-value">{{countdown.hours}}</span>
+            <span class="countdown-unit">HRS</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <span class="countdown-value">{{countdown.minutes}}</span>
+            <span class="countdown-unit">MIN</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <span class="countdown-value">{{countdown.seconds}}</span>
+            <span class="countdown-unit">SEC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="deals-grid">
+      <div class="deal-card" *ngFor="let product of dealProducts">
+        <div class="deal-image">
+          <i class="bi bi-phone-fill deal-icon"></i>
+        </div>
+        <h3 class="deal-name">{{product.designation}}</h3>
+        <div class="deal-price">
+          <span class="deal-current-price">{{formatPrice(product.prix)}}</span>
+          <span class="deal-old-price">{{formatPrice(product.prix * 1.2)}}</span>
+        </div>
+        <div class="deal-progress">
+          <div class="deal-progress-bar" style="width: 75%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trending Products Section -->
+<section class="trending-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">
+        Produits <span>tendance</span>
+      </h2>
+      <a routerLink="/products" class="view-all">
+        Voir tout <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let product of products">
+        <div class="product-badge" *ngIf="product.quantite < 10">
+          -15%
+        </div>
+        <div class="product-image">
+          <i class="bi bi-laptop-fill product-icon"></i>
+          <div class="product-actions">
+            <button class="action-btn" (click)="addToCart(product)">
+              <i class="bi bi-cart-plus"></i>
+            </button>
+            <button class="action-btn">
+              <i class="bi bi-heart"></i>
+            </button>
+            <button class="action-btn">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-brand">{{product.brand?.nom || 'MARQUE'}}</span>
+          <h3 class="product-name">{{product.designation}}</h3>
+          <div class="product-price">
+            <span class="price-current">{{formatPrice(product.prix)}}</span>
+            <span class="price-old" *ngIf="product.quantite < 10">
+              {{formatPrice(product.prix * 1.15)}}
+            </span>
+          </div>
+          <button class="btn-add-cart" (click)="addToCart(product)">
+            Ajouter au panier
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brands Section -->
+<section class="brands-section section-padding bg-light">
+  <div class="container">
+    <h2 class="section-title text-center">
+      Nos <span>marques</span>
+    </h2>
+    <div class="brands-grid">
+      <div class="brand-card" *ngFor="let brand of brands">
+        <span class="brand-name">{{brand.nom}}</span>
+      </div>
+    </div>
+  </div>
+</section>

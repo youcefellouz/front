@@ -1,4 +1,3 @@
-// src/app/pages/login/login.component.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -32,8 +31,6 @@ export class LoginComponent {
 
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
-        console.log('Login successful', response);
-        // إعادة توجيه حسب نوع المستخدم
         if (response.user.is_admin) {
           this.router.navigate(['/admin/dashboard']);
         } else {
@@ -41,7 +38,6 @@ export class LoginComponent {
         }
       },
       error: (error) => {
-        console.error('Login error', error);
         this.errorMessage = error.error?.message || 'Erreur de connexion. Vérifiez vos identifiants.';
         this.isLoading = false;
       },

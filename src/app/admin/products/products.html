@@ -1,0 +1,75 @@
+<div class="products-management">
+  <!-- Header -->
+  <div class="page-header">
+    <h2>Gestion des Produits</h2>
+    <button class="btn btn-primary" (click)="openModal()">
+      <i class="bi bi-plus-lg"></i>
+      Ajouter un produit
+    </button>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="filters-card">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" placeholder="Rechercher un produit..." [(ngModel)]="searchQuery" (input)="filterProducts()">
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Référence</th>
+            <th>Désignation</th>
+            <th>Catégorie</th>
+            <th>Marque</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts">
+            <td>{{product.id}}</td>
+            <td>
+              <div class="product-thumb">
+                <i class="bi bi-laptop-fill"></i>
+              </div>
+            </td>
+            <td>{{product.reference}}</td>
+            <td><strong>{{product.designation}}</strong></td>
+            <td>{{product.category?.nom || 'N/A'}}</td>
+            <td>{{product.brand?.nom || 'N/A'}}</td>
+            <td>{{product.prix | number:'1.0-0'}} DA</td>
+            <td>
+              <span [class.low-stock]="product.quantite < 10">
+                {{product.quantite}}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge" [class.status-active]="product.is_available">
+                {{product.is_available ? 'Disponible' : 'Indisponible'}}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon btn-edit" (click)="editProduct(product)" title="Modifier">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn-icon btn-delete" (click)="deleteProduct(product.id)" title="Supprimer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

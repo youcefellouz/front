@@ -1,169 +1,166 @@
-<!-- src/app/pages/register/register.component.html -->
-<div class="register-container">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-7">
-        <div class="card shadow-lg border-0 rounded-lg mt-5">
-          <div class="card-header bg-success text-white text-center py-4">
-            <h3 class="font-weight-light mb-0">
-              <i class="bi bi-person-plus"></i> Créer un compte
-            </h3>
-          </div>
-          <div class="card-body p-5">
-            <!-- رسالة الخطأ -->
-            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
-              {{ errorMessage }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-
-            <!-- رسالة النجاح -->
-            <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ successMessage }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-
-            <!-- نموذج التسجيل -->
-            <form (ngSubmit)="onSubmit()">
-              <div class="row">
-                <!-- Nom complet -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="name" 
-                      placeholder="Nom complet"
-                      [(ngModel)]="registerData.name"
-                      name="name"
-                      required
-                    >
-                    <label for="name">
-                      <i class="bi bi-person"></i> Nom complet
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Email -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="email" 
-                      class="form-control" 
-                      id="email" 
-                      placeholder="name@example.com"
-                      [(ngModel)]="registerData.email"
-                      name="email"
-                      required
-                    >
-                    <label for="email">
-                      <i class="bi bi-envelope"></i> Email
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <!-- Téléphone -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="tel" 
-                      class="form-control" 
-                      id="telephone" 
-                      placeholder="Téléphone"
-                      [(ngModel)]="registerData.telephone"
-                      name="telephone"
-                    >
-                    <label for="telephone">
-                      <i class="bi bi-telephone"></i> Téléphone
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Adresse -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="adresse" 
-                      placeholder="Adresse"
-                      [(ngModel)]="registerData.adresse"
-                      name="adresse"
-                    >
-                    <label for="adresse">
-                      <i class="bi bi-geo-alt"></i> Adresse
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <!-- Mot de passe -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="password" 
-                      class="form-control" 
-                      id="password" 
-                      placeholder="Mot de passe"
-                      [(ngModel)]="registerData.password"
-                      name="password"
-                      required
-                      minlength="6"
-                    >
-                    <label for="password">
-                      <i class="bi bi-lock"></i> Mot de passe (min. 6 caractères)
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Confirmation mot de passe -->
-                <div class="col-md-6">
-                  <div class="form-floating mb-3">
-                    <input 
-                      type="password" 
-                      class="form-control" 
-                      id="password_confirmation" 
-                      placeholder="Confirmer le mot de passe"
-                      [(ngModel)]="registerData.password_confirmation"
-                      name="password_confirmation"
-                      required
-                      [class.is-invalid]="!passwordsMatch"
-                    >
-                    <label for="password_confirmation">
-                      <i class="bi bi-lock-fill"></i> Confirmer le mot de passe
-                    </label>
-                    <div *ngIf="!passwordsMatch" class="invalid-feedback">
-                      Les mots de passe ne correspondent pas.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Submit Button -->
-              <div class="d-grid mb-3 mt-4">
-                <button 
-                  type="submit" 
-                  class="btn btn-success btn-lg"
-                  [disabled]="isLoading"
-                >
-                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-                  S'inscrire
-                </button>
-              </div>
-
-              <!-- Link to Login -->
-              <div class="text-center">
-                <p class="mb-0">
-                  Déjà un compte ? 
-                  <a routerLink="/login" class="text-decoration-none">Se connecter</a>
-                </p>
-              </div>
-            </form>
-          </div>
+<div class="auth-container">
+  <div class="auth-wrapper">
+    <div class="auth-sidebar">
+      <div class="auth-brand">
+        <h1 class="brand-logo">
+          Electro<span class="text-primary">.</span>
+          <span class="brand-sub">DZ</span>
+        </h1>
+        <p class="brand-tagline">
+          Rejoignez-nous et profitez des meilleures offres
+        </p>
+      </div>
+      <div class="auth-benefits">
+        <div class="benefit-item">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Accès exclusif aux offres</span>
+        </div>
+        <div class="benefit-item">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Suivi de commandes en temps réel</span>
+        </div>
+        <div class="benefit-item">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Historique d'achats</span>
         </div>
       </div>
+    </div>
+    
+    <div class="auth-content">
+      <div class="auth-header">
+        <h2 class="auth-title">Créer un compte</h2>
+        <p class="auth-subtitle">
+          Remplissez le formulaire ci-dessous pour créer votre compte
+        </p>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        <i class="bi bi-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success">
+        <i class="bi bi-check-circle"></i>
+        {{ successMessage }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-person"></i>
+              Nom complet
+            </label>
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="John Doe"
+              [(ngModel)]="registerData.name"
+              name="name"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-envelope"></i>
+            Adresse email
+          </label>
+          <input 
+            type="email" 
+            class="form-control" 
+            placeholder="name@example.com"
+            [(ngModel)]="registerData.email"
+            name="email"
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-telephone"></i>
+              Téléphone
+            </label>
+            <input 
+              type="tel" 
+              class="form-control" 
+              placeholder="+213 555 123 456"
+              [(ngModel)]="registerData.telephone"
+              name="telephone"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-geo-alt"></i>
+            Adresse
+          </label>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Votre adresse complète"
+            [(ngModel)]="registerData.adresse"
+            name="adresse"
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-lock"></i>
+              Mot de passe
+            </label>
+            <input 
+              type="password" 
+              class="form-control" 
+              placeholder="••••••••"
+              [(ngModel)]="registerData.password"
+              name="password"
+              required
+              minlength="6"
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-lock-fill"></i>
+              Confirmer le mot de passe
+            </label>
+            <input 
+              type="password" 
+              class="form-control" 
+              placeholder="••••••••"
+              [(ngModel)]="registerData.password_confirmation"
+              name="password_confirmation"
+              required
+              [class.is-invalid]="!passwordsMatch && registerData.password_confirmation"
+            >
+            <div *ngIf="!passwordsMatch && registerData.password_confirmation" class="invalid-feedback">
+              Les mots de passe ne correspondent pas
+            </div>
+          </div>
+        </div>
+
+        <div class="form-checkbox">
+          <label class="checkbox-label">
+            <input type="checkbox" required>
+            <span>J'accepte les <a href="#" class="text-primary">Conditions d'utilisation</a> et la <a href="#" class="text-primary">Politique de confidentialité</a></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner"></span>
+          <span *ngIf="!isLoading">Créer un compte</span>
+          <span *ngIf="isLoading">Inscription en cours...</span>
+        </button>
+
+        <p class="auth-footer">
+          Déjà un compte? 
+          <a routerLink="/login" class="text-primary">Se connecter</a>
+        </p>
+      </form>
     </div>
   </div>
 </div>

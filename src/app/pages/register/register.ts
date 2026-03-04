@@ -1,4 +1,3 @@
-// src/app/pages/register/register.component.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -37,7 +36,6 @@ export class RegisterComponent {
     this.successMessage = '';
     this.passwordsMatch = true;
 
-    // التحقق من تطابق كلمات المرور
     if (this.registerData.password !== this.registerData.password_confirmation) {
       this.passwordsMatch = false;
       this.errorMessage = 'Les mots de passe ne correspondent pas.';
@@ -48,15 +46,13 @@ export class RegisterComponent {
 
     this.authService.register(this.registerData).subscribe({
       next: (response) => {
-        console.log('Registration successful', response);
         this.successMessage = 'Compte créé avec succès! Redirection...';
         setTimeout(() => {
           this.router.navigate(['/']);
         }, 2000);
       },
       error: (error) => {
-        console.error('Registration error', error);
-        this.errorMessage = error.error?.message || 'Une erreur est survenue lors de la création du compte.';
+        this.errorMessage = error.error?.message || 'Une erreur est survenue.';
         this.isLoading = false;
       },
       complete: () => {

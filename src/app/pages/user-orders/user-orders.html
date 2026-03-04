@@ -1,0 +1,62 @@
+<div class="orders-section section-padding">
+  <div class="container">
+    <h1 class="page-title">
+      <i class="bi bi-bag"></i>
+      Mes Commandes
+    </h1>
+
+    <div *ngIf="orders.length === 0" class="empty-orders">
+      <i class="bi bi-inbox"></i>
+      <h2>Aucune commande</h2>
+      <p>Commencez vos achats dès maintenant!</p>
+      <button class="btn btn-primary btn-lg" routerLink="/products">
+        <i class="bi bi-bag"></i>
+        Voir les produits
+      </button>
+    </div>
+
+    <div class="orders-list" *ngIf="orders.length > 0">
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="order-header">
+          <div class="order-id">
+            <span>Commande #{{order.reference}}</span>
+            <span class="order-date">{{order.created_at | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <span class="order-status status-{{order.status}}">
+            {{getStatusText(order.status)}}
+          </span>
+        </div>
+        
+        <div class="order-items">
+          <div class="order-item" *ngFor="let item of order.items">
+            <div class="item-image">
+              <i class="bi bi-laptop-fill"></i>
+            </div>
+            <div class="item-info">
+              <h4>{{item.article?.designation}}</h4>
+              <span>Qté: {{item.quantite}}</span>
+            </div>
+            <div class="item-price">{{item.prix_unitaire | number:'1.0-0'}} DA</div>
+          </div>
+        </div>
+        
+        <div class="order-footer">
+          <div class="order-total">
+            <span>Total:</span>
+            <span class="total-amount">{{order.total_amount | number:'1.0-0'}} DA</span>
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-outline" routerLink="/orders/{{order.id}}">
+              <i class="bi bi-eye"></i>
+              Détails
+            </button>
+            <button class="btn btn-primary" *ngIf="order.status === 'pending'" (click)="cancelOrder(order.id)">
+              <i class="bi bi-x-circle"></i>
+              Annuler
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

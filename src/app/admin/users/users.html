@@ -1,0 +1,43 @@
+<div class="users-management">
+  <div class="page-header">
+    <h2>Gestion des Utilisateurs</h2>
+  </div>
+
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar-sm">
+                  <i class="bi bi-person"></i>
+                </div>
+                <strong>{{user.name}}</strong>
+              </div>
+            </td>
+            <td>{{user.email}}</td>
+            <td>{{user.telephone || 'N/A'}}</td>
+            <td>
+              <span class="role-badge" [class.admin]="user.is_admin">
+                {{user.is_admin ? 'Administrateur' : 'Client'}}
+              </span>
+            </td>
+            <td>{{user.created_at | date:'dd/MM/yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

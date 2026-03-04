@@ -1,0 +1,156 @@
+<div class="dashboard">
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <i class="bi bi-box-seam"></i>
+      </div>
+      <div class="stat-info">
+        <h3 class="stat-value">{{stats.totalProducts}}</h3>
+        <p class="stat-label">Total Produits</p>
+      </div>
+      <div class="stat-change positive">
+        <i class="bi bi-arrow-up"></i>
+        <span>12%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <i class="bi bi-bag"></i>
+      </div>
+      <div class="stat-info">
+        <h3 class="stat-value">{{stats.totalOrders}}</h3>
+        <p class="stat-label">Total Commandes</p>
+      </div>
+      <div class="stat-change positive">
+        <i class="bi bi-arrow-up"></i>
+        <span>8%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon yellow">
+        <i class="bi bi-people"></i>
+      </div>
+      <div class="stat-info">
+        <h3 class="stat-value">{{stats.totalUsers}}</h3>
+        <p class="stat-label">Total Utilisateurs</p>
+      </div>
+      <div class="stat-change positive">
+        <i class="bi bi-arrow-up"></i>
+        <span>15%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon purple">
+        <i class="bi bi-currency-dollar"></i>
+      </div>
+      <div class="stat-info">
+        <h3 class="stat-value">{{stats.totalRevenue | number:'1.0-0'}} DA</h3>
+        <p class="stat-label">Revenu Total</p>
+      </div>
+      <div class="stat-change positive">
+        <i class="bi bi-arrow-up"></i>
+        <span>22%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders & Top Products -->
+  <div class="dashboard-grid">
+    <!-- Recent Orders -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="bi bi-bag"></i>
+          Commandes Récentes
+        </h3>
+        <a routerLink="/admin/orders" class="card-link">
+          Voir tout <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Commande</th>
+                <th>Client</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of recentOrders">
+                <td><strong>#{{order.reference}}</strong></td>
+                <td>{{order.user?.name}}</td>
+                <td>{{order.total_amount | number:'1.0-0'}} DA</td>
+                <td>
+                  <span class="status-badge status-{{order.status}}">
+                    {{getStatusText(order.status)}}
+                  </span>
+                </td>
+                <td>{{order.created_at | date:'dd/MM/yyyy'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="bi bi-star"></i>
+          Meilleurs Ventes
+        </h3>
+        <a routerLink="/admin/products" class="card-link">
+          Voir tout <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="top-products">
+          <div class="top-product" *ngFor="let product of topProducts; let i = index">
+            <div class="product-rank">{{i + 1}}</div>
+            <div class="product-image">
+              <i class="bi bi-laptop-fill"></i>
+            </div>
+            <div class="product-info">
+              <h4 class="product-name">{{product.designation}}</h4>
+              <span class="product-sales">En stock: {{product.quantite}}</span>
+            </div>
+            <div class="product-price">{{product.prix | number:'1.0-0'}} DA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales Chart & Notifications -->
+  <div class="dashboard-grid">
+    <!-- Sales Chart -->
+    <div class="dashboard-card full-width">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="bi bi-graph-up"></i>
+          Évolution des Ventes
+        </h3>
+        <select class="period-select">
+          <option value="7">7 jours</option>
+          <option value="30">30 jours</option>
+          <option value="90">90 jours</option>
+        </select>
+      </div>
+      <div class="card-body">
+        <div class="chart-placeholder">
+          <i class="bi bi-graph-up chart-icon"></i>
+          <p>Graphique des ventes (Intégration Chart.js recommandée)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

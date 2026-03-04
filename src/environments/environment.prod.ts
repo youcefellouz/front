@@ -1,5 +1,7 @@
-// src/environments/environment.prod.ts
 export const environment = {
   production: true,
-  apiUrl: 'http://your-production-api.com/api'
+  apiUrl: 'https://your-api-domain.com/api',
+  appName: 'ElectroMart DZ',
+  currency: 'DA',
+  defaultLanguage: 'fr'
 };

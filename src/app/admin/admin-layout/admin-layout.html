@@ -1,0 +1,76 @@
+<div class="admin-wrapper">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-logo">
+      <h2>Electro<span class="text-primary">.</span>DZ</h2>
+      <span class="admin-badge">Admin</span>
+    </div>
+    
+    <nav class="admin-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-speedometer2"></i>
+        <span>Tableau de bord</span>
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-box-seam"></i>
+        <span>Produits</span>
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-bag"></i>
+        <span>Commandes</span>
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-people"></i>
+        <span>Utilisateurs</span>
+      </a>
+      <a routerLink="/admin/categories" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-folder"></i>
+        <span>Catégories</span>
+      </a>
+      <a routerLink="/admin/brands" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-tag"></i>
+        <span>Marques</span>
+      </a>
+    </nav>
+    
+    <div class="admin-footer">
+      <a routerLink="/" class="back-site">
+        <i class="bi bi-arrow-left"></i>
+        <span>Retour au site</span>
+      </a>
+      <button (click)="logout()" class="logout-btn">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <!-- Top Header -->
+    <header class="admin-header">
+      <div class="admin-header-left">
+        <button class="menu-toggle" (click)="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
+        <h1 class="page-title">{{pageTitle}}</h1>
+      </div>
+      <div class="admin-header-right">
+        <div class="admin-user">
+          <div class="user-avatar">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <div class="user-info">
+            <span class="user-name">{{adminName}}</span>
+            <span class="user-role">Administrateur</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
