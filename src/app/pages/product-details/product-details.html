@@ -1,12 +1,14 @@
+<!-- src/app/pages/product-details/product-details.component.html -->
+
 <!-- Breadcrumb -->
-<div class="breadcrumb-section">
+<div class="breadcrumb-section" *ngIf="product">
   <div class="container">
     <nav class="breadcrumb">
       <a routerLink="/">Accueil</a>
       <i class="bi bi-chevron-right"></i>
       <a routerLink="/products">Produits</a>
       <i class="bi bi-chevron-right"></i>
-      <span class="active">{{product?.designation}}</span>
+      <span class="active">{{product.designation}}</span>
     </nav>
   </div>
 </div>
@@ -15,7 +17,7 @@
 <section class="product-details-section section-padding" *ngIf="product">
   <div class="container">
     <div class="product-details-grid">
-      <!-- Product Image -->
+      <!-- Product Gallery -->
       <div class="product-gallery">
         <div class="main-image">
           <i class="bi bi-laptop-fill main-icon"></i>
@@ -38,15 +40,12 @@
         <div class="product-header">
           <span class="product-brand">{{product.brand?.nom || 'MARQUE'}}</span>
           <h1 class="product-title">{{product.designation}}</h1>
-          <div class="product-rating">
+          <div class="product-rating" *ngIf="reviewCount > 0">
             <div class="stars">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-half"></i>
+              <i class="bi bi-star-fill" *ngFor="let s of getStars(averageRating)"></i>
+              <i class="bi bi-star" *ngFor="let s of getEmptyStars(averageRating)"></i>
             </div>
-            <span class="rating-count">(4.5/5 - 128 avis)</span>
+            <span class="rating-count">({{reviewCount}} avis)</span>
           </div>
         </div>
 
@@ -87,14 +86,14 @@
                 <i class="bi bi-dash"></i>
               </button>
               <input type="number" class="qty-input" [value]="quantity" readonly>
-              <button class="qty-btn" (click)="increaseQuantity()" [disabled]="quantity >= product.quantite">
+              <button class="qty-btn" (click)="increaseQuantity()" [disabled]="!product || quantity >= product.quantite">
                 <i class="bi bi-plus"></i>
               </button>
             </div>
           </div>
 
           <div class="action-buttons">
-            <button class="btn btn-primary btn-lg" (click)="addToCart()" [disabled]="product.quantite === 0">
+            <button class="btn btn-primary btn-lg" (click)="addToCart()" [disabled]="!product || product.quantite === 0">
               <i class="bi bi-cart-plus"></i>
               Ajouter au panier
             </button>
@@ -125,64 +124,104 @@
     <!-- Product Tabs -->
     <div class="product-tabs">
       <div class="tabs-header">
-        <button class="tab-btn active" (click)="activeTab = 'description'">Description</button>
-        <button class="tab-btn" (click)="activeTab = 'specifications'">Spécifications</button>
-        <button class="tab-btn" (click)="activeTab = 'reviews'">Avis (128)</button>
+        <button class="tab-btn" [class.active]="activeTab === 'description'" (click)="activeTab = 'description'">Description</button>
+        <button class="tab-btn" [class.active]="activeTab === 'specifications'" (click)="activeTab = 'specifications'">Spécifications</button>
+        <button class="tab-btn" [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Avis ({{reviewCount}})</button>
       </div>
+      
       <div class="tabs-content">
+        <!-- Description Tab -->
         <div class="tab-pane" *ngIf="activeTab === 'description'">
           <h3>Description du produit</h3>
           <p>{{product.description || 'Description détaillée du produit...'}}</p>
         </div>
+        
+        <!-- Specifications Tab -->
         <div class="tab-pane" *ngIf="activeTab === 'specifications'">
           <table class="specs-table">
-            <tr>
-              <th>Marque</th>
-              <td>{{product.brand?.nom || 'N/A'}}</td>
-            </tr>
-            <tr>
-              <th>Catégorie</th>
-              <td>{{product.category?.nom || 'N/A'}}</td>
-            </tr>
-            <tr>
-              <th>Référence</th>
-              <td>{{product.reference}}</td>
-            </tr>
-            <tr>
-              <th>Prix</th>
-              <td>{{formatPrice(product.prix)}}</td>
-            </tr>
+            <tr><th>Marque</th><td>{{product.brand?.nom || 'N/A'}}</td></tr>
+            <tr><th>Catégorie</th><td>{{product.category?.nom || 'N/A'}}</td></tr>
+            <tr><th>Référence</th><td>{{product.reference}}</td></tr>
+            <tr><th>Prix</th><td>{{formatPrice(product.prix)}}</td></tr>
+            <tr><th>Stock</th><td>{{product.quantite}} unités</td></tr>
           </table>
         </div>
+        
+        <!-- Reviews Tab ⭐ -->
         <div class="tab-pane" *ngIf="activeTab === 'reviews'">
           <div class="reviews-section">
-            <div class="review-summary">
-              <div class="average-rating">
-                <span class="rating-number">4.5</span>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
+            <div class="reviews-header">
+              <h3>Avis des clients ({{reviewCount}})</h3>
+              <div class="rating-summary" *ngIf="reviewCount > 0">
+                <div class="average-rating">
+                  <span class="rating-number">{{averageRating}}</span>
+                  <div class="stars">
+                    <i class="bi bi-star-fill" *ngFor="let s of getStars(averageRating)"></i>
+                    <i class="bi bi-star" *ngFor="let s of getEmptyStars(averageRating)"></i>
+                  </div>
+                  <span class="rating-count">({{reviewCount}} avis)</span>
                 </div>
-                <span class="total-reviews">128 avis</span>
               </div>
             </div>
-            <div class="review-list">
-              <div class="review-card">
+
+            <!-- Add Review Button -->
+            <div class="add-review-trigger" *ngIf="authService.isLoggedIn()">
+              <button class="btn btn-outline" (click)="showReviewForm = !showReviewForm">
+                <i class="bi bi-pencil"></i>
+                {{showReviewForm ? 'Annuler' : 'Ajouter un avis'}}
+              </button>
+            </div>
+
+            <!-- Review Form -->
+            <form *ngIf="showReviewForm && authService.isLoggedIn()" (ngSubmit)="submitReview()" class="review-form">
+              <div class="form-group">
+                <label>Votre note:</label>
+                <div class="rating-input">
+                  <i class="bi bi-star" *ngFor="let star of [1,2,3,4,5]"
+                     (click)="reviewData.rating = star"
+                     [class.filled]="star <= reviewData.rating">
+                  </i>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Votre avis:</label>
+                <textarea class="form-control" rows="4" placeholder="Partagez votre expérience..."
+                          [(ngModel)]="reviewData.comment" name="comment" required minlength="10" maxlength="500">
+                </textarea>
+                <!-- ✅ تم التصحيح: إزالة ?. لأن comment ليس nullable -->
+                <small class="text-gray">{{reviewData.comment.length || 0}}/500</small>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-send"></i> Publier l'avis
+                </button>
+              </div>
+            </form>
+
+            <!-- Reviews List -->
+            <div class="reviews-list">
+              <div *ngIf="reviews.length === 0" class="no-reviews">
+                <p>Soyez le premier à partager votre avis!</p>
+              </div>
+              <div class="review-card" *ngFor="let review of reviews">
                 <div class="review-header">
-                  <span class="reviewer-name">Ahmed M.</span>
-                  <div class="review-stars">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
+                  <div class="reviewer-info">
+                    <div class="reviewer-avatar"><i class="bi bi-person-circle"></i></div>
+                    <div>
+                      <strong>{{review.user?.name || 'Utilisateur'}}</strong>
+                      <small class="review-date">{{formatDate(review.created_at)}}</small>
+                    </div>
+                  </div>
+                  <div class="review-rating">
+                    <i class="bi bi-star-fill" *ngFor="let s of getStars(review.rating)"></i>
+                    <i class="bi bi-star" *ngFor="let s of getEmptyStars(review.rating)"></i>
                   </div>
                 </div>
-                <p class="review-text">Excellent produit, je recommande!</p>
-                <span class="review-date">15 Janvier 2026</span>
+                <p class="review-comment">{{review.comment}}</p>
+                <button *ngIf="review.user?.id === authService.getCurrentUser()?.id"
+                        class="btn-delete-review" (click)="deleteReview(review.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -191,7 +230,7 @@
     </div>
 
     <!-- Related Products -->
-    <div class="related-products">
+    <div class="related-products" *ngIf="relatedProducts.length > 0">
       <h2 class="section-title">Produits <span>similaires</span></h2>
       <div class="products-grid">
         <div class="product-card" *ngFor="let related of relatedProducts">
@@ -204,9 +243,7 @@
             <div class="product-price">
               <span class="price-current">{{formatPrice(related.prix)}}</span>
             </div>
-            <button class="btn-add-cart" (click)="viewProduct(related)">
-              Voir le produit
-            </button>
+            <button class="btn-add-cart" (click)="viewProduct(related)">Voir le produit</button>
           </div>
         </div>
       </div>

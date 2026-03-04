@@ -1,3 +1,4 @@
+<!-- src/app/pages/user-profile/user-profile.component.html -->
 <div class="profile-section section-padding">
   <div class="container">
     <div class="profile-layout">
@@ -69,6 +70,89 @@
             </button>
           </div>
         </form>
+
+        <!-- Repair Requests Section ⭐ جديد -->
+        <div class="repair-section">
+          <div class="section-header">
+            <h3>
+              <i class="bi bi-tools"></i>
+              Demandes de réparation
+            </h3>
+            <button class="btn btn-primary btn-sm" (click)="showRepairForm = !showRepairForm">
+              <i class="bi bi-plus-lg"></i>
+              Nouvelle demande
+            </button>
+          </div>
+
+          <!-- Repair Form -->
+          <div *ngIf="showRepairForm" class="repair-form-card">
+            <form (ngSubmit)="submitRepairRequest()">
+              <div class="form-group">
+                <label>Produit à réparer *</label>
+                <select class="form-control" [(ngModel)]="repairData.article_id" name="article_id" required>
+                  <option value="">Sélectionner un produit</option>
+                  <option *ngFor="let product of myProducts" [value]="product.id">
+                    {{product.designation}} (Ref: {{product.reference}})
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Description du problème *</label>
+                <textarea class="form-control" rows="4" placeholder="Décrivez le problème rencontré..."
+                          [(ngModel)]="repairData.description" name="description" required minlength="20" maxlength="500">
+                </textarea>
+                <small class="text-gray">{{repairData.description?.length || 0}}/500</small>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-send"></i> Envoyer la demande
+                </button>
+                <button type="button" class="btn btn-outline" (click)="showRepairForm = false">
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Repair Requests List -->
+          <div class="repair-list">
+            <div *ngIf="repairRequests.length === 0" class="empty-repairs">
+              <p>Aucune demande de réparation</p>
+            </div>
+
+            <div class="repair-card" *ngFor="let request of repairRequests">
+              <div class="repair-header">
+                <div class="repair-product">
+                  <i class="bi bi-laptop"></i>
+                  <div>
+                    <strong>{{request.article?.designation || 'Produit #' + request.article_id}}</strong>
+                    <small>Ref: {{request.article?.reference}}</small>
+                  </div>
+                </div>
+                <span class="status-badge" [class]="getStatusClass(request.status)">
+                  {{getStatusText(request.status)}}
+                </span>
+              </div>
+              
+              <p class="repair-description">{{request.description}}</p>
+              
+              <div class="repair-footer">
+                <small class="repair-date">
+                  <i class="bi bi-clock"></i>
+                  {{request.created_at | date:'dd/MM/yyyy HH:mm'}}
+                </small>
+                
+                <button *ngIf="request.status === 'pending'"
+                        class="btn-delete-repair"
+                        (click)="deleteRepairRequest(request.id)">
+                  <i class="bi bi-x-circle"></i> Annuler
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   </div>

@@ -1,3 +1,4 @@
+<!-- src/app/admin/dashboard/dashboard.component.html -->
 <div class="dashboard">
   <!-- Stats Cards -->
   <div class="stats-grid">
@@ -130,25 +131,116 @@
     </div>
   </div>
 
-  <!-- Sales Chart & Notifications -->
-  <div class="dashboard-grid">
-    <!-- Sales Chart -->
-    <div class="dashboard-card full-width">
-      <div class="card-header">
-        <h3 class="card-title">
-          <i class="bi bi-graph-up"></i>
-          Évolution des Ventes
-        </h3>
-        <select class="period-select">
-          <option value="7">7 jours</option>
-          <option value="30">30 jours</option>
-          <option value="90">90 jours</option>
-        </select>
+  <!-- Analytics Section ⭐ جديد -->
+  <div class="analytics-section">
+    <h2 class="section-title">
+      <i class="bi bi-graph-up"></i>
+      Analytics & Intelligence
+    </h2>
+
+    <div class="analytics-grid">
+      <!-- Sales Report Card -->
+      <div class="analytics-card">
+        <div class="card-header">
+          <h3>📊 Rapport des ventes</h3>
+          <select class="period-select" [(ngModel)]="selectedPeriod" (change)="changeReportPeriod(selectedPeriod)">
+            <option value="weekly">Cette semaine</option>
+            <option value="monthly">Ce mois</option>
+            <option value="quarterly">Ce trimestre</option>
+          </select>
+        </div>
+        <div class="card-body" *ngIf="salesReport">
+          <div class="stats-grid-mini">
+            <div class="stat-mini">
+              <span class="stat-value">{{formatNumber(salesReport.total_revenue)}} DA</span>
+              <span class="stat-label">Revenu total</span>
+            </div>
+            <div class="stat-mini">
+              <span class="stat-value">{{formatNumber(salesReport.total_orders)}}</span>
+              <span class="stat-label">Commandes</span>
+            </div>
+            <div class="stat-mini">
+              <span class="stat-value">{{formatNumber(salesReport.average_order_value)}} DA</span>
+              <span class="stat-label">Panier moyen</span>
+            </div>
+            <div class="stat-mini" [class.positive]="salesReport.growth_percentage > 0"
+                            [class.negative]="salesReport.growth_percentage < 0">
+              <span class="stat-value">{{formatPercent(salesReport.growth_percentage)}}</span>
+              <span class="stat-label">Croissance</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="chart-placeholder">
-          <i class="bi bi-graph-up chart-icon"></i>
-          <p>Graphique des ventes (Intégration Chart.js recommandée)</p>
+
+      <!-- Trending Products Card -->
+      <div class="analytics-card">
+        <div class="card-header">
+          <h3>🔥 Produits tendance</h3>
+        </div>
+        <div class="card-body">
+          <div class="trend-list">
+            <div class="trend-item" *ngFor="let product of trendingProducts; let i = index">
+              <span class="trend-rank">#{{i + 1}}</span>
+              <div class="trend-info">
+                <strong>{{product.designation}}</strong>
+                <small>{{product.reason}}</small>
+              </div>
+              <span class="trend-score">{{product.score | number:'1.0-1'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stock Alerts Card -->
+      <div class="analytics-card">
+        <div class="card-header">
+          <h3>⚠️ Alertes stock</h3>
+          <span class="badge-count" *ngIf="stockAlerts.length > 0">{{stockAlerts.length}}</span>
+        </div>
+        <div class="card-body">
+          <div *ngIf="stockAlerts.length === 0" class="no-alerts">
+            <i class="bi bi-check-circle"></i>
+            <p>Tous les stocks sont bons</p>
+          </div>
+          <div class="alert-list">
+            <div class="alert-item" *ngFor="let alert of stockAlerts">
+              <div class="alert-info">
+                <strong>{{alert.designation}}</strong>
+                <small>Stock: {{alert.quantite}} / Seuil: {{alert.seuil_alerte}}</small>
+              </div>
+              <div class="alert-actions">
+                <span class="alert-badge" [class.critical]="alert.status === 'critical'">
+                  {{alert.status === 'critical' ? 'Critique' : 'Attention'}}
+                </span>
+                <button class="btn-resolve" (click)="resolveAlert(alert.article_id)">
+                  <i class="bi bi-check"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Discounts Card -->
+      <div class="analytics-card">
+        <div class="card-header">
+          <h3>🏷️ Offres actives</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="activeDiscounts.length === 0" class="no-discounts">
+            <p>Aucune offre active</p>
+          </div>
+          <div class="discount-list">
+            <div class="discount-item" *ngFor="let discount of activeDiscounts">
+              <div class="discount-info">
+                <strong>{{discount.nom}}</strong>
+                <small>{{discount.pourcentage}}% de réduction</small>
+              </div>
+              <div class="discount-dates">
+                <small>{{discount.date_debut | date:'dd/MM'}} - {{discount.date_fin | date:'dd/MM'}}</small>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
